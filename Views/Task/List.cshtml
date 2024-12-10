@@ -1,0 +1,117 @@
+﻿@model List<TaskManagementSystem.Models.TaskEntity>
+@{
+    ViewData["Title"] = "List";
+}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 5px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+
+
+        button:hover {
+            background-color: #0056b3;
+        }
+        .btn-right{
+            margin-right:10px;
+        }
+
+     select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+ 
+</style>
+
+<h2 class="text-blue  d-flex justify-content-center mb-4">Your Task List</h2>
+
+
+<div class="row mb-4">
+    <div class="col-md-10">
+        <form class="d-flex"  asp-controller="Task">
+
+            
+            <input type="date"   name="DueDate" class="form-control" >
+           
+            <select name="Status" style="margin-left:10px;">
+                <option value="" disabled selected>Select Status</option>
+                <option value="Pending">Pending</option>
+                <option value="Progress">Progress</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <select name="Priority" style="margin-left:10px;margin-right:10px">
+                <option value="" disabled selected>Select Priority</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+            <input name="searchString" class="form-control  "
+            type="search" placeholder="Search" aria-label="Search" value="@ViewData["CurrentFilter"]">
+            <button class="btn btn-primary btn-right" style="margin-left:10px" type="submit" asp-action="List">Search</button>
+
+           
+           
+        </form>
+    </div>
+    <div class="col-md-2 d-flex justify-content-end">
+        <a asp-controller="Task" asp-action="Create"><button class="btn btn-primary">New Task</button></a>
+    </div>
+</div>
+
+
+<table class="table-striped table-hover">
+    <thead class="table-primary">
+        <tr>
+            <th>No.</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Created Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+         @foreach (var data in Model)
+        {
+            <tr >
+                <td>@(((Int32)1) + @Model.IndexOf(data))</td>
+                <td>@data.Title</td>
+                <td >@data.Description</td>
+                <td>@data.Priority</td>
+                <td>@data.StartDate</td>
+                <td>@data.EndDate</td>
+                <td>
+                    <button class="btn" style="@(
+    data.Status == "Completed" ? "background-color:rgb(72,218,121);color:white" :
+    data.Status == "Progress" ? "background-color:rgb(251,169,72);color:white" :
+    "background-color:rgb(255,94,72);color:white"
+  )">
+                        @data.Status
+                    </button>
+                </td>
+                <td>@data.CreateDate</td>
+
+                <td>
+                    <a class="" asp-controller="Task" asp-action="Edit" asp-route-id="@data.Id">Edit</a>
+                </td>
+            </tr>
+            
+        } 
+    </tbody>
+</table>

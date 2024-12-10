@@ -1,0 +1,142 @@
+﻿@{
+}
+@model TaskManagementSystem.Models.TaskEntity
+<style>
+
+
+    .container1 {
+        max-width: 600px;
+        height: 75vh; /* Set a fixed height */
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+    }
+
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-header {
+        background-color: #6c757d;
+        color: white;
+        text-align: center;
+        font-size: 1.5rem;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding: 1rem;
+    }
+
+    .card-body {
+        overflow-y: auto; /* Allows scrolling inside the form */
+        padding: 1.5rem;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #6c757d;
+    }
+
+    .btn-submit {
+       
+        margin-right:10px;
+        margin-left:10px;
+    }
+
+       
+
+    .form-control {
+        border-radius: 7px;
+    }
+    /* Optional: Add space between form elements */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .two-column {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap; /* Ensures the form elements stack on smaller screens */
+    }
+
+        .two-column .form-group {
+            flex: 1; /* Makes both the priority and status fields take equal width */
+        }
+</style>
+
+
+
+<div class="container1  margin-auto">
+    <div class="card">
+        <div class="card-header">
+            Task Update Form
+        </div>
+        <div class="card-body">
+            <form method="post" asp-controller="Task" asp-route-returnurl="@ViewData["ReturnUrl"]">
+
+                <input type="text" class="form-control" id="ID" name="Id" asp-for="Id" hidden>
+                <!-- Task Title -->
+                <div class="form-group mb-3">
+                    <label for="taskTitle">Task Title</label>
+                    <input type="text" class="form-control" id="Title" name="Title" asp-for="Title" required>
+                </div>
+
+                <!-- Task Description -->
+                <div class="form-group mb-3">
+                    <label for="taskDescription">Task Description</label>
+                    <textarea asp-for="Description" class="form-control" id="Description" name="Description" rows="2" required></textarea>
+                </div>
+
+                <div class="two-column">
+                    <!-- Priority Level -->
+                    <div class="form-group">
+                        <label for="priorityLevel">Priority Level</label>
+                        <select id="Priority" name="Priority" asp-for="Priority" class="form-control" required>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" name="status" class="form-control" asp-for="Status" required>
+                            <option value="Pending">Pending</option>
+                            <option value="Progress">Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="two-column">
+                    <!-- Start Date -->
+                    <div class="form-group mb-3">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" asp-for="StartDate" class="form-control" id="startDate" name="startDate" required>
+                    </div>
+
+                    <!-- End Date -->
+                    <div class="form-group mb-3">
+                        <label for="endDate">End Date</label>
+                        <input type="date" asp-for="EndDate" class="form-control" id="endDate" name="endDate" required>
+                    </div>
+                </div>
+
+
+                
+                <a class="btn-submit btn btn-secondary float-end" asp-action="List">Cancel</a>
+                <input type="submit" value="Delete" class="btn-submit btn btn-danger float-end"
+                       asp-action="Delete" />
+                <input type="submit" value="Update" class="btn-submit btn btn-success float-end"
+                       asp-action="Edit"  />
+               
+               
+            </form>
+        </div>
+    </div>
+</div>
